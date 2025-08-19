@@ -28,27 +28,30 @@ export default function RootLayout({
     <html lang="fr">
       <body className={`${inter.className} antialiased`}>
         {/* Navigation Header */}
-        <header className="bg-white shadow-sm sticky top-0 z-50">
+        <header className="bg-white shadow-sm sticky top-0 z-50 border-b-2 border-red-600">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between h-16">
-              <Link href="/" className="text-2xl font-bold text-blue-600">
-                Guide de Lyon
+              <Link href="/" className="text-2xl font-bold text-red-600">
+                🦁 Guide de Lyon
               </Link>
               <nav className="hidden md:flex items-center gap-8">
-                <Link href="/annuaire" className="hover:text-blue-600 transition">
+                <Link href="/annuaire" className="hover:text-red-600 transition font-medium">
                   Annuaire
                 </Link>
-                <Link href="/evenements" className="hover:text-blue-600 transition">
+                <Link href="/evenements" className="hover:text-red-600 transition font-medium">
                   Événements
                 </Link>
-                <Link href="/restaurants" className="hover:text-blue-600 transition">
+                <Link href="/restaurants" className="hover:text-red-600 transition font-medium">
                   Restaurants
                 </Link>
-                <Link href="/blog" className="hover:text-blue-600 transition">
+                <Link href="/blog" className="hover:text-red-600 transition font-medium">
                   Blog
                 </Link>
-                <Link href="/contact" className="hover:text-blue-600 transition">
+                <Link href="/contact" className="hover:text-red-600 transition font-medium">
                   Contact
+                </Link>
+                <Link href="/dashboard" className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium">
+                  Espace Pro
                 </Link>
               </nav>
               <button className="md:hidden">

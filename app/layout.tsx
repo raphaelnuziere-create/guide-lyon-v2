@@ -61,6 +61,83 @@ export default function RootLayout({
         </header>
         
         {children}
+        
+        {/* Footer */}
+        <footer className="bg-gray-900 text-white">
+          <div className="container mx-auto px-4 py-12">
+            <div className="grid md:grid-cols-4 gap-8">
+              {/* About */}
+              <div>
+                <h3 className="text-xl font-bold mb-4">Guide de Lyon</h3>
+                <p className="text-gray-400 mb-4">
+                  Votre guide local pour découvrir le meilleur de Lyon : restaurants, événements, culture et bien plus.
+                </p>
+                <div className="flex gap-3">
+                  <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition">
+                    f
+                  </a>
+                  <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition">
+                    i
+                  </a>
+                  <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition">
+                    t
+                  </a>
+                </div>
+              </div>
+              
+              {/* Quick Links */}
+              <div>
+                <h4 className="font-semibold mb-4">Découvrir</h4>
+                <ul className="space-y-2">
+                  <li><Link href="/annuaire" className="text-gray-400 hover:text-white transition">Annuaire</Link></li>
+                  <li><Link href="/restaurants" className="text-gray-400 hover:text-white transition">Restaurants</Link></li>
+                  <li><Link href="/evenements" className="text-gray-400 hover:text-white transition">Événements</Link></li>
+                  <li><Link href="/blog" className="text-gray-400 hover:text-white transition">Blog</Link></li>
+                </ul>
+              </div>
+              
+              {/* Services */}
+              <div>
+                <h4 className="font-semibold mb-4">Services</h4>
+                <ul className="space-y-2">
+                  <li><a href="#" className="text-gray-400 hover:text-white transition">Espace Pro</a></li>
+                  <li><a href="#" className="text-gray-400 hover:text-white transition">Publicité</a></li>
+                  <li><a href="#" className="text-gray-400 hover:text-white transition">Partenariat</a></li>
+                  <li><Link href="/contact" className="text-gray-400 hover:text-white transition">Contact</Link></li>
+                </ul>
+              </div>
+              
+              {/* Newsletter */}
+              <div>
+                <h4 className="font-semibold mb-4">Newsletter</h4>
+                <p className="text-gray-400 mb-4">
+                  Recevez les dernières actualités lyonnaises
+                </p>
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    placeholder="Votre email"
+                    className="flex-1 px-3 py-2 bg-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:bg-gray-700"
+                  />
+                  <button className="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition">
+                    OK
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+              <div>
+                © 2025 Guide de Lyon. Tous droits réservés.
+              </div>
+              <div className="flex gap-6 mt-4 md:mt-0">
+                <a href="#" className="hover:text-white transition">Mentions légales</a>
+                <a href="#" className="hover:text-white transition">Confidentialité</a>
+                <a href="#" className="hover:text-white transition">CGU</a>
+              </div>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );

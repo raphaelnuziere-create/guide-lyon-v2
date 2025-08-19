@@ -1,5 +1,6 @@
-import { Sparkles, MapPin, Calendar, TrendingUp, Users, Star, ChevronRight, Heart } from 'lucide-react'
+import { Sparkles, MapPin, Calendar, TrendingUp, Users, Star, ChevronRight, Heart, Building2, Award, Briefcase } from 'lucide-react'
 import Link from 'next/link'
+import CalendarWidget from '@/components/calendar/CalendarWidget'
 
 // Données temporaires pour la démo
 const featuredPlaces = [
@@ -10,7 +11,8 @@ const featuredPlaces = [
     image: "https://images.unsplash.com/photo-1555992336-03a23c7b20ee?w=400",
     rating: 4.8,
     address: "102 cours Lafayette, Lyon 3e",
-    isFavorite: false
+    isFavorite: false,
+    isPremium: true
   },
   {
     id: 2,
@@ -19,7 +21,8 @@ const featuredPlaces = [
     image: "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=400",
     rating: 4.6,
     address: "86 quai Perrache, Lyon 2e",
-    isFavorite: true
+    isFavorite: true,
+    isPremium: false
   },
   {
     id: 3,
@@ -28,7 +31,8 @@ const featuredPlaces = [
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400",
     rating: 4.7,
     address: "Place Général Leclerc, Lyon 6e",
-    isFavorite: false
+    isFavorite: false,
+    isPremium: false
   },
   {
     id: 4,
@@ -37,31 +41,8 @@ const featuredPlaces = [
     image: "https://images.unsplash.com/photo-1584285402827-e58334683f84?w=400",
     rating: 4.9,
     address: "8 place de Fourvière, Lyon 5e",
-    isFavorite: true
-  }
-]
-
-const upcomingEvents = [
-  {
-    id: 1,
-    title: "Fête des Lumières 2025",
-    date: "5-8 Décembre",
-    category: "Festival",
-    image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400"
-  },
-  {
-    id: 2,
-    title: "Nuits Sonores",
-    date: "28 Mai - 1 Juin",
-    category: "Musique",
-    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400"
-  },
-  {
-    id: 3,
-    title: "Biennale de la Danse",
-    date: "Septembre 2025",
-    category: "Danse",
-    image: "https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=400"
+    isFavorite: true,
+    isPremium: true
   }
 ]
 
@@ -89,44 +70,82 @@ const latestNews = [
   }
 ]
 
+const subscriptionPlans = [
+  {
+    name: 'Gratuit',
+    price: '0€',
+    features: ['Fiche basique', 'Horaires et contact', 'Localisation'],
+    highlighted: false
+  },
+  {
+    name: 'Pro',
+    price: '29€',
+    period: '/mois',
+    features: ['Tout du plan Gratuit', '2 événements/mois', 'Photos illimitées', 'Statistiques basiques'],
+    highlighted: true
+  },
+  {
+    name: 'Boost',
+    price: '79€',
+    period: '/mois',
+    features: ['Tout du plan Pro', '5 événements/mois', 'Newsletter mensuelle', 'Mise en avant', 'Support prioritaire'],
+    highlighted: false
+  }
+]
+
 export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Hero Section avec gradient rouge Lyon */}
       <section className="relative bg-gradient-to-br from-red-600 via-red-500 to-orange-500 text-white">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative container mx-auto px-4 py-24">
+        <div className="relative container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="flex items-center justify-center gap-2 mb-4">
               <Sparkles className="h-6 w-6 text-yellow-300" />
               <span className="text-yellow-300 font-semibold">La capitale des Gaules vous accueille</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">
               Guide de Lyon
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-red-50">
+            <p className="text-xl md:text-2xl mb-6 text-red-50">
               Découvrez les trésors cachés et les incontournables de Lyon
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/annuaire" className="px-8 py-4 bg-white text-red-600 rounded-lg font-semibold hover:bg-red-50 transition">
+              <Link href="/annuaire" className="px-8 py-3 bg-white text-red-600 rounded-lg font-semibold hover:bg-red-50 transition">
                 Explorer l'annuaire
               </Link>
-              <Link href="/evenements" className="px-8 py-4 bg-red-700 text-white rounded-lg font-semibold hover:bg-red-800 transition">
-                Voir les événements
+              <Link href="/dashboard" className="px-8 py-3 bg-red-700 text-white rounded-lg font-semibold hover:bg-red-800 transition">
+                Espace Pro
               </Link>
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
+      </section>
+
+      {/* Section Calendrier et Événements - 2 COLONNES */}
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">Agenda Lyonnais</h2>
+            <p className="text-gray-600 mt-2">Sélectionnez une date pour voir les événements</p>
+          </div>
+          
+          {/* Le CalendarWidget avec le layout 2 colonnes */}
+          <CalendarWidget 
+            compact={false}
+            showEventsList={true}
+          />
+        </div>
       </section>
 
       {/* Actualités */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-3xl font-bold text-gray-900">Actualités lyonnaises</h2>
-              <p className="text-gray-600 mt-2">Les dernières nouvelles de la ville</p>
+              <p className="text-gray-600 mt-1">Les dernières nouvelles de la ville</p>
             </div>
             <Link href="/blog" className="text-red-600 hover:text-red-700 font-semibold flex items-center gap-1">
               Toutes les actualités
@@ -153,13 +172,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Lieux à découvrir */}
-      <section className="py-16">
+      {/* Lieux Premium */}
+      <section className="py-12 bg-gradient-to-br from-gray-50 to-red-50">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900">Lieux incontournables</h2>
-              <p className="text-gray-600 mt-2">Les meilleures adresses sélectionnées pour vous</p>
+              <h2 className="text-3xl font-bold text-gray-900">Établissements Premium</h2>
+              <p className="text-gray-600 mt-1">Les meilleures adresses partenaires</p>
             </div>
             <Link href="/annuaire" className="text-red-600 hover:text-red-700 font-semibold flex items-center gap-1">
               Voir tout l'annuaire
@@ -169,7 +188,13 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredPlaces.map((place) => (
-              <div key={place.id} className="bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden group">
+              <div key={place.id} className="bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden group relative">
+                {place.isPremium && (
+                  <div className="absolute top-4 left-4 z-10 px-2 py-1 bg-yellow-400 text-black rounded text-xs font-bold flex items-center gap-1">
+                    <Award className="h-3 w-3" />
+                    Premium
+                  </div>
+                )}
                 <div className="h-48 relative">
                   <img src={place.image} alt={place.name} className="w-full h-full object-cover group-hover:scale-105 transition" />
                   <button className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur rounded-full hover:bg-white transition">
@@ -196,36 +221,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Événements */}
-      <section className="py-16 bg-gradient-to-br from-red-50 to-orange-50">
+      {/* Plans d'abonnement */}
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900">Événements à venir</h2>
-              <p className="text-gray-600 mt-2">Ne manquez rien de l'agenda lyonnais</p>
-            </div>
-            <Link href="/evenements" className="text-red-600 hover:text-red-700 font-semibold flex items-center gap-1">
-              Tous les événements
-              <ChevronRight className="h-4 w-4" />
-            </Link>
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Offres Professionnelles</h2>
+            <p className="text-xl text-gray-600">Choisissez l'offre adaptée à votre établissement</p>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {upcomingEvents.map((event) => (
-              <div key={event.id} className="bg-white rounded-xl shadow-sm hover:shadow-lg transition overflow-hidden">
-                <div className="h-48 relative">
-                  <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <span className="text-sm font-semibold bg-red-600 px-3 py-1 rounded-full inline-block mb-2">
-                      {event.category}
-                    </span>
-                    <h3 className="text-xl font-bold">{event.title}</h3>
-                    <p className="text-sm flex items-center gap-1 mt-1">
-                      <Calendar className="h-4 w-4" />
-                      {event.date}
-                    </p>
+          
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {subscriptionPlans.map((plan, index) => (
+              <div key={index} className={`relative rounded-2xl ${
+                plan.highlighted 
+                  ? 'bg-gradient-to-br from-red-600 to-orange-500 text-white p-[2px]' 
+                  : 'border-2 border-gray-200'
+              }`}>
+                {plan.highlighted && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-yellow-400 text-black rounded-full text-sm font-bold">
+                    Plus populaire
                   </div>
+                )}
+                <div className={`${plan.highlighted ? 'bg-white text-gray-900' : ''} rounded-2xl p-6`}>
+                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                  <div className="mb-6">
+                    <span className="text-4xl font-bold">{plan.price}</span>
+                    {plan.period && <span className="text-gray-600">{plan.period}</span>}
+                  </div>
+                  <ul className="space-y-3 mb-6">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <svg className="h-5 w-5 text-green-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <button className={`w-full py-3 rounded-lg font-semibold transition ${
+                    plan.highlighted 
+                      ? 'bg-red-600 text-white hover:bg-red-700' 
+                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                  }`}>
+                    Choisir ce plan
+                  </button>
                 </div>
               </div>
             ))}
@@ -234,16 +272,30 @@ export default function Home() {
       </section>
 
       {/* CTA Professionnels */}
-      <section className="py-16 bg-gray-900 text-white">
+      <section className="py-12 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <Users className="h-12 w-12 text-red-500 mx-auto mb-4" />
+            <Building2 className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h2 className="text-3xl font-bold mb-4">Vous êtes un professionnel ?</h2>
             <p className="text-xl text-gray-300 mb-8">
-              Rejoignez le Guide de Lyon et donnez de la visibilité à votre établissement
+              Rejoignez plus de 500 établissements lyonnais déjà présents sur le Guide
             </p>
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-red-500 mb-2">+45%</div>
+                <p className="text-gray-400">de visibilité en moyenne</p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-red-500 mb-2">12K+</div>
+                <p className="text-gray-400">visiteurs par mois</p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-red-500 mb-2">98%</div>
+                <p className="text-gray-400">de satisfaction client</p>
+              </div>
+            </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact" className="px-8 py-4 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">
+              <Link href="/dashboard" className="px-8 py-4 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">
                 Créer mon espace pro
               </Link>
               <Link href="/contact" className="px-8 py-4 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition">
@@ -254,27 +306,48 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="py-16 bg-gradient-to-r from-red-600 to-orange-500 text-white">
+      {/* Newsletter avec options */}
+      <section className="py-12 bg-gradient-to-r from-red-600 to-orange-500 text-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Restez informé</h2>
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-4">Newsletter personnalisée</h2>
             <p className="text-xl mb-8 text-red-50">
-              Recevez chaque semaine le meilleur de Lyon dans votre boîte mail
+              Choisissez votre rythme : quotidien, hebdomadaire ou mensuel
             </p>
-            <div className="flex gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Votre email"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500"
-              />
-              <button className="px-6 py-3 bg-white text-red-600 rounded-lg font-semibold hover:bg-red-50 transition">
-                S'abonner
-              </button>
+            
+            <div className="bg-white/10 backdrop-blur rounded-2xl p-8">
+              <div className="grid md:grid-cols-3 gap-4 mb-6">
+                <label className="bg-white/20 backdrop-blur rounded-lg p-4 cursor-pointer hover:bg-white/30 transition">
+                  <input type="radio" name="frequency" className="mb-2" />
+                  <h4 className="font-semibold mb-1">Quotidienne</h4>
+                  <p className="text-sm text-red-100">L'actualité du jour</p>
+                </label>
+                <label className="bg-white/20 backdrop-blur rounded-lg p-4 cursor-pointer hover:bg-white/30 transition">
+                  <input type="radio" name="frequency" className="mb-2" defaultChecked />
+                  <h4 className="font-semibold mb-1">Hebdomadaire</h4>
+                  <p className="text-sm text-red-100">Le condensé du jeudi</p>
+                </label>
+                <label className="bg-white/20 backdrop-blur rounded-lg p-4 cursor-pointer hover:bg-white/30 transition">
+                  <input type="radio" name="frequency" className="mb-2" />
+                  <h4 className="font-semibold mb-1">Mensuelle</h4>
+                  <p className="text-sm text-red-100">Le dossier du mois</p>
+                </label>
+              </div>
+              
+              <div className="flex gap-3 max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="Votre email"
+                  className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500"
+                />
+                <button className="px-6 py-3 bg-white text-red-600 rounded-lg font-semibold hover:bg-red-50 transition">
+                  S'abonner
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </section>
     </main>
-  );
+  )
 }

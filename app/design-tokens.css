@@ -1,15 +1,15 @@
 :root {
-  /* Colors - Lyon inspired palette */
-  --color-primary-50: #fef2f2;
-  --color-primary-100: #fee2e2;
-  --color-primary-200: #fecaca;
-  --color-primary-300: #fca5a5;
-  --color-primary-400: #f87171;
-  --color-primary-500: #ef4444;
-  --color-primary-600: #dc2626;
-  --color-primary-700: #b91c1c;
-  --color-primary-800: #991b1b;
-  --color-primary-900: #7f1d1d;
+  /* Colors - Original blue/violet palette */
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-200: #ddd6fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #764ba2;
+  --color-primary-600: #667eea;
+  --color-primary-700: #5a3a7e;
+  --color-primary-800: #4c1d95;
+  --color-primary-900: #3b0764;
   
   /* Neutral colors */
   --color-gray-50: #f9fafb;
